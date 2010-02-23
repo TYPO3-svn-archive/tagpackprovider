@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language labels for database tables/fields belonging to extension 'tagpackprovider'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_tagpackprovider_selections">Tag Pack Selection</label>
+			<label index="tx_tagpackprovider_selections.name">Name</label>
+			<label index="tx_tagpackprovider_selections.tables.I.0">Pages</label>
+			<label index="tx_tagpackprovider_selections.tables.I.1">Content elements</label>
+			<label index="tx_tagpackprovider_selections.tables.I.2">News items</label>
+			<label index="tx_tagpackprovider_selections.tables">Tables</label>
+			<label index="tx_tagpackprovider_selections.tags">Tags</label>
+			<label index="tx_tagpackprovider_selections.tag_expressions">Tags from expressions</label>
+			<label index="wizards.add_tagpackprovider">Add a new Tag Pack provider</label>
+		</languageKey>
+	</data>
+</T3locallang>

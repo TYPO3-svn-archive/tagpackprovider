@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<description>Contents of tagpackprovider csh</description>
+		<type>CSH</type>
+		<csh_table>tx_tagpackprovider_selections</csh_table>
+		<fileId>EXT:dataquery/locallang_csh_txtagpackproviderselections.xml</fileId>
+		<labelContext type="array">
+		</labelContext>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index=".alttitle">Tag Pack selections</label>
+			<label index=".description">Tag Pack selections provide a list of primary keys from one or more tables, from records corresponding to selected tags.</label>
+			<label index="details">
+				Tag Pack selections act as a secondary provider in a Tesseract structure.
+			</label>
+			<label index="name.alttitle">Name</label>
+			<label index="name.description">Some significant name or label for the selection.</label>
+			<label index="tables.alttitle">List of tables</label>
+			<label index="tables.description">Select which tables to get the records from.</label>
+			<label index="tags.alttitle">Tags selector</label>
+			<label index="tags.description">Simply select some tags from the available ones to form a selection. Overrides tag selection from expressions (below).</label>
+			<label index="tag_selections.alttitle">Tags from expressions</label>
+			<label index="tag_expressions.description">Use expressions to select tags instead of the above selector.</label>
+			<label index="tag_expressions.syntax">
+				Enter an expression on each line to select tags. Expressions are of the form:
+
+				key: value
+
+				Refer to the Base Controller manual for more details about using expressions. Lines can be commented out with "#" or "//".
+			</label>
+			<label index="tag_expressions.details">
+				Selection by expression will be overridden by manual selections made in the "Tags" field.
+			</label>
+		</languageKey>
+	</data>
+</T3locallang>

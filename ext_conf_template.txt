@@ -1,0 +1,2 @@
+# cat=basic/enable; type=text; label=Tagged Tables:Choose which (tagged) tables to allow the users to choose from. Leave empty to use the same list as that of tagpack.
+taggedTables = 
