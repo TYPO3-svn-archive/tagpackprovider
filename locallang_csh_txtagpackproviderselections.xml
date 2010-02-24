@@ -21,17 +21,23 @@
 			<label index="tables.description">Select which tables to get the records from.</label>
 			<label index="tags.alttitle">Tags selector</label>
 			<label index="tags.description">Simply select some tags from the available ones to form a selection. Overrides tag selection from expressions (below).</label>
-			<label index="tag_selections.alttitle">Tags from expressions</label>
+			<label index="tag_expressions.alttitle">Tags from expressions</label>
 			<label index="tag_expressions.description">Use expressions to select tags instead of the above selector.</label>
 			<label index="tag_expressions.syntax">
 				Enter an expression on each line to select tags. Expressions are of the form:
 
 				key: value
 
-				Refer to the Base Controller manual for more details about using expressions. Lines can be commented out with "#" or "//".
+				Refer to the Expressions manual for more details about using expressions. Lines can be commented out with "#" or "//".
 			</label>
 			<label index="tag_expressions.details">
 				Selection by expression will be overridden by manual selections made in the "Tags" field.
+			</label>
+			<label index="tags_override.description">When this box is checked, the tags fecthed using expressions will override the manually selected ones. Otherwise tags from both sources are merged.</label>
+			<label index="logical_operator.alttitle">Logical operator</label>
+			<label index="logical_operator.description">Choose "AND" to find items that match ALL tags. Choose "OR" (default) to find items that match any one tag.</label>
+			<label index="logical_operator.details">
+				Be warned that choosing the "AND" operator requires additional processing. This is due to the fact that the condition cannot be resolved in a singe database query. Instead some post-processing is needed, to find items that match all selected tags.
 			</label>
 		</languageKey>
 	</data>

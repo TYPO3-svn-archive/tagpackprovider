@@ -12,8 +12,12 @@
 			<label index="tx_tagpackprovider_selections.tables.I.1">Content elements</label>
 			<label index="tx_tagpackprovider_selections.tables.I.2">News items</label>
 			<label index="tx_tagpackprovider_selections.tables">Tables</label>
-			<label index="tx_tagpackprovider_selections.tags">Tags</label>
+			<label index="tx_tagpackprovider_selections.tags">Tags (manual selection)</label>
 			<label index="tx_tagpackprovider_selections.tag_expressions">Tags from expressions</label>
+			<label index="tx_tagpackprovider_selections.tags_override">Override manual selection</label>
+			<label index="tx_tagpackprovider_selections.logical_operator">Logical operator</label>
+			<label index="tx_tagpackprovider_selections.logical_operator.I.0">AND</label>
+			<label index="tx_tagpackprovider_selections.logical_operator.I.1">OR</label>
 			<label index="wizards.add_tagpackprovider">Add a new Tag Pack provider</label>
 		</languageKey>
 	</data>

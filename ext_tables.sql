@@ -12,6 +12,8 @@ CREATE TABLE tx_tagpackprovider_selections (
 	tables varchar(40) DEFAULT '' NOT NULL,
 	tags text,
 	tag_expressions text,
+	tags_override tinyint(4) DEFAULT '1' NOT NULL,
+	logical_operator varchar(3) DEFAULT 'OR' NOT NULL,
 	
 	PRIMARY KEY (uid),
 	KEY parent (pid)
