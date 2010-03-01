@@ -20,12 +20,11 @@
 *  GNU General Public License for more details.
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
-*
-* $Id: class.tx_tagpackprovider.php 227 2009-09-14 12:22:49Z rpresedo $
 ***************************************************************/
 
 require_once(t3lib_extMgm::extPath('basecontroller', 'services/class.tx_basecontroller_providerbase.php'));
 require_once(t3lib_extMgm::extPath('basecontroller', 'services/class.tx_basecontroller_filterbase.php'));
+require_once(t3lib_extMgm::extPath('basecontroller', 'lib/class.tx_basecontroller_utilities.php'));
 
 /**
  * Base dataprovider service. All Data Provider services should inherit from this class
@@ -33,6 +32,8 @@ require_once(t3lib_extMgm::extPath('basecontroller', 'services/class.tx_basecont
  * @author		Francois Suter (Cobweb) <typo3@cobweb.ch>
  * @package		TYPO3
  * @subpackage	tx_tagpackprovider
+ *
+ * $Id: class.tx_tagpackprovider.php 227 2009-09-14 12:22:49Z rpresedo $
  */
 class tx_tagpackprovider extends tx_basecontroller_providerbase {
 
@@ -89,7 +90,7 @@ class tx_tagpackprovider extends tx_basecontroller_providerbase {
 		$manualTags = array();
 			// Get manually selected tags
 		if (!empty($this->providerData['tags'])) {
-			$manualTags = t3lib_div::trimExplode($this->providerData['tags']);
+			$manualTags = t3lib_div::trimExplode(',', $this->providerData['tags']);
 		}
 			// Get tags from expressions
 		$expressionTags = array();
@@ -237,36 +238,33 @@ class tx_tagpackprovider extends tx_basecontroller_providerbase {
 	}
 
 	/**
-	 * This method relies on the basecontroller parser to get tags from expressions
+	 * This method relies on the expressions parser to get tags from expressions
 	 *
 	 * @param	string	$field: field to parse for expressions
 	 * @return	string	Comma-separated list of tag primary keys
 	 */
 	protected function parseExpressionField($field) {
 		$tags = array();
-			// Explode all the lines on the return character
-		$allLines = t3lib_div::trimExplode("\n", $field, 1);
-		foreach ($allLines as $aLine) {
-				// Take only line that don't start with # or // (comments)
-			if (strpos($aLine, '#') !== 0 && strpos($aLine, '//') !== 0) {
-				$line = trim($aLine);
-				try {
-					$evaluatedExpression = tx_expressions_parser::evaluateExpression($line);
-					if (!empty($evaluatedExpression)) {
-						$tagList = array();
-						if (strpos($evaluatedExpression, ',') === false) {
-							$tagList = array($evaluatedExpression);
-						} else {
-							$tagList = t3lib_div::trimExplode(',', $evaluatedExpression, 1);
-						}
-						foreach ($tagList as $aTag) {
-							$tags[] = intval($aTag);
-						}
+			// Parse the field
+		$allLines = tx_basecontroller_utilities::parseConfigurationField($field);
+			// Interpret each line
+		foreach ($allLines as $line) {
+			try {
+				$evaluatedExpression = tx_expressions_parser::evaluateExpression($line);
+				if (!empty($evaluatedExpression)) {
+					$tagList = array();
+					if (strpos($evaluatedExpression, ',') === false) {
+						$tagList = array($evaluatedExpression);
+					} else {
+						$tagList = t3lib_div::trimExplode(',', $evaluatedExpression, 1);
+					}
+					foreach ($tagList as $aTag) {
+						$tags[] = intval($aTag);
 					}
 				}
-				catch (Exception $e) {
-					// Do nothing if expression parsing failed
-				}
+			}
+			catch (Exception $e) {
+				// Do nothing if expression parsing failed
 			}
 		}
 		return $tags;
