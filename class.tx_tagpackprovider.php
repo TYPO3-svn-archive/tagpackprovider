@@ -89,7 +89,7 @@ class tx_tagpackprovider extends tx_basecontroller_providerbase {
 		$manualTags = array();
 			// Get manually selected tags
 		if (!empty($this->providerData['tags'])) {
-			$manualTags = t3lib_div::trimExplode($this->providerData['tags']);
+			$manualTags = t3lib_div::trimExplode(',', $this->providerData['tags']);
 		}
 			// Get tags from expressions
 		$expressionTags = array();
