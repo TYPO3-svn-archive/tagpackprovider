@@ -29,7 +29,7 @@
  * @package		TYPO3
  * @subpackage	tx_tagpackprovider
  *
- * $Id: class.tx_tagpackprovider_tca.php 264 2009-12-23 15:55:01Z fsuter $
+ * $Id$
  */
 class tx_tagpackprovider_tca {
 

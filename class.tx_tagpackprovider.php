@@ -33,7 +33,7 @@ require_once(t3lib_extMgm::extPath('basecontroller', 'lib/class.tx_basecontrolle
  * @package		TYPO3
  * @subpackage	tx_tagpackprovider
  *
- * $Id: class.tx_tagpackprovider.php 227 2009-09-14 12:22:49Z rpresedo $
+ * $Id$
  */
 class tx_tagpackprovider extends tx_basecontroller_providerbase {
 
