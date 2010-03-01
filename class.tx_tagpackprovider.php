@@ -21,7 +21,7 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 *
-* $Id: class.tx_tagpackprovider.php 227 2009-09-14 12:22:49Z rpresedo $
+* $Id$
 ***************************************************************/
 
 require_once(t3lib_extMgm::extPath('basecontroller', 'services/class.tx_basecontroller_providerbase.php'));
