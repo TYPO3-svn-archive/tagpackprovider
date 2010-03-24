@@ -19,19 +19,19 @@ $TCA['tx_tagpackprovider_selections'] = array (
 		'cruser_id' => 'cruser_id',
 		'default_sortby' => 'ORDER BY crdate',	
 		'delete' => 'deleted',	
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
-		'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY).'res/icon_tx_tagpackprovider_selections.gif',
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'tca.php',
+		'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'res/icon_tx_tagpackprovider_selections.gif',
 	),
 );
 
-// Add context sensitive help (csh) for this table
+	// Add context sensitive help (csh) for this table
 t3lib_extMgm::addLLrefForTCAdescr('tx_tagpackprovider_selections', t3lib_extMgm::extPath($_EXTKEY) . 'locallang_csh_txtagpackproviderselections.xml');
 
-// Register tagpackprovider as a secondary Data Provider
+	// Register tagpackprovider as a secondary Data Provider
 t3lib_div::loadTCA('tt_content');
 $TCA['tt_content']['columns']['tx_displaycontroller_provider2']['config']['allowed'] .= ',tx_tagpackprovider_selections';
 
-// Add a wizard for adding a tagpackprovider
+	// Add a wizard for adding a tagpackprovider
 $addTagpackProviderWizard = array(
 						'type' => 'script',
 						'title' => 'LLL:EXT:tagpackprovider/locallang_db.xml:wizards.add_tagpackprovider',

@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009 Francois Suter (Cobweb) <typo3@cobweb.ch>
+*  (c) 2009-2010 Francois Suter (Cobweb) <typo3@cobweb.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,9 +22,9 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('basecontroller', 'services/class.tx_basecontroller_providerbase.php'));
-require_once(t3lib_extMgm::extPath('basecontroller', 'services/class.tx_basecontroller_filterbase.php'));
-require_once(t3lib_extMgm::extPath('basecontroller', 'lib/class.tx_basecontroller_utilities.php'));
+require_once(t3lib_extMgm::extPath('tesseract', 'services/class.tx_tesseract_providerbase.php'));
+require_once(t3lib_extMgm::extPath('tesseract', 'services/class.tx_tesseract_filterbase.php'));
+require_once(t3lib_extMgm::extPath('tesseract', 'lib/class.tx_tesseract_utilities.php'));
 
 /**
  * Base dataprovider service. All Data Provider services should inherit from this class
@@ -35,7 +35,7 @@ require_once(t3lib_extMgm::extPath('basecontroller', 'lib/class.tx_basecontrolle
  *
  * $Id$
  */
-class tx_tagpackprovider extends tx_basecontroller_providerbase {
+class tx_tagpackprovider extends tx_tesseract_providerbase {
 
 	/**
 	 * This method returns the type of data structure that the Data Provider can prepare
@@ -43,7 +43,7 @@ class tx_tagpackprovider extends tx_basecontroller_providerbase {
 	 * @return	string	type of the provided data structure
 	 */
 	public function getProvidedDataStructure() {
-		return tx_basecontroller::$idlistStructureType;
+		return tx_tesseract::IDLIST_STRUCTURE_TYPE;
 	}
 
 	/**
@@ -53,7 +53,7 @@ class tx_tagpackprovider extends tx_basecontroller_providerbase {
 	 * @return	boolean		true if it can handle the requested type, false otherwise
 	 */
 	public function providesDataStructure($type) {
-		return $type == tx_basecontroller::$idlistStructureType;
+		return tx_tesseract::IDLIST_STRUCTURE_TYPE;
 	}
 
 	/**
@@ -246,7 +246,7 @@ class tx_tagpackprovider extends tx_basecontroller_providerbase {
 	protected function parseExpressionField($field) {
 		$tags = array();
 			// Parse the field
-		$allLines = tx_basecontroller_utilities::parseConfigurationField($field);
+		$allLines = tx_tesseract_utilities::parseConfigurationField($field);
 			// Interpret each line
 		foreach ($allLines as $line) {
 			try {

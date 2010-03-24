@@ -4,7 +4,7 @@
 		<description>Contents of tagpackprovider csh</description>
 		<type>CSH</type>
 		<csh_table>tx_tagpackprovider_selections</csh_table>
-		<fileId>EXT:dataquery/locallang_csh_txtagpackproviderselections.xml</fileId>
+		<fileId>EXT:tagpackprovider/locallang_csh_txtagpackproviderselections.xml</fileId>
 		<labelContext type="array">
 		</labelContext>
 	</meta>
@@ -12,7 +12,7 @@
 		<languageKey index="default" type="array">
 			<label index=".alttitle">Tag Pack selections</label>
 			<label index=".description">Tag Pack selections provide a list of primary keys from one or more tables, from records corresponding to selected tags.</label>
-			<label index="details">
+			<label index=".details">
 				Tag Pack selections act as a secondary provider in a Tesseract structure.
 			</label>
 			<label index="name.alttitle">Name</label>
