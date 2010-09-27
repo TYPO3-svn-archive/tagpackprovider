@@ -1,2 +1,3 @@
+Tesseract Data Provider based on tags from extension "tagpack".
 
-Feel free to add some documentation or simply add a link to the online manual.
+Please refer to the manual for more details.

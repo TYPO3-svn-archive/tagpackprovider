@@ -1,27 +1,27 @@
 <?php
 
 ########################################################################
-# Extension Manager/Repository config file for ext: "tagpackprovider"
+# Extension Manager/Repository config file for ext "tagpackprovider".
 #
-# Auto generated 15-06-2009 15:33
+# Auto generated 27-09-2010 16:13
 #
 # Manual updates:
-# Only the data in the array - anything else is removed by next write.
-# "version" and "dependencies" must not be touched!
+# Only the data in the array - everything else is removed by next
+# writing. "version" and "dependencies" must not be touched!
 ########################################################################
 
 $EM_CONF[$_EXTKEY] = array(
-	'title' => 'Tag Pack Data Provider',
-	'description' => 'This Data Provider relies on tags from extension Tag Pack to provide lists of items.',
+	'title' => 'Tag Pack-based Data Provider - Tesseract project',
+	'description' => 'This Data Provider relies on tags from extension Tag Pack to provide lists of items. More info on http://www.typo3-tesseract.com/',
 	'category' => 'services',
 	'author' => 'Francois Suter (Cobweb)',
 	'author_email' => 'typo3@cobweb.ch',
 	'shy' => '',
-	'dependencies' => 'tagpack,tesseract',
+	'dependencies' => 'tagpack,tesseract,expressions',
 	'conflicts' => '',
 	'priority' => '',
 	'module' => '',
-	'state' => 'alpha',
+	'state' => 'stable',
 	'internal' => '',
 	'uploadfolder' => 0,
 	'createDirs' => '',
@@ -29,19 +29,22 @@ $EM_CONF[$_EXTKEY] = array(
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
 	'author_company' => '',
-	'version' => '0.6.0',
+	'version' => '1.0.0',
 	'constraints' => array(
 		'depends' => array(
 			'tagpack' => '',
 			'typo3' => '4.3.0-0.0.0',
-			'tesseract' => '0.7.0-0.0.0',
+			'tesseract' => '1.0.0-0.0.0',
+			'expressions' => '',
 		),
 		'conflicts' => array(
 		),
 		'suggests' => array(
 		),
 	),
-	'_md5_values_when_last_written' => 'a:12:{s:9:"ChangeLog";s:4:"004f";s:10:"README.txt";s:4:"ee2d";s:65:"class.tx_tagpackprovider_tx_tagpackprovider_selections_tables.php";s:4:"35c2";s:12:"ext_icon.gif";s:4:"1bdc";s:17:"ext_localconf.php";s:4:"b0ca";s:14:"ext_tables.php";s:4:"a64d";s:14:"ext_tables.sql";s:4:"2806";s:38:"icon_tx_tagpackprovider_selections.gif";s:4:"475a";s:16:"locallang_db.xml";s:4:"1ac2";s:7:"tca.php";s:4:"2425";s:19:"doc/wizard_form.dat";s:4:"0ea6";s:20:"doc/wizard_form.html";s:4:"50dc";}',
+	'_md5_values_when_last_written' => 'a:17:{s:9:"ChangeLog";s:4:"35f1";s:10:"README.txt";s:4:"a890";s:28:"class.tx_tagpackprovider.php";s:4:"3c70";s:32:"class.tx_tagpackprovider_tca.php";s:4:"16a7";s:16:"ext_autoload.php";s:4:"d40e";s:21:"ext_conf_template.txt";s:4:"6374";s:12:"ext_icon.gif";s:4:"f4d1";s:17:"ext_localconf.php";s:4:"4cba";s:14:"ext_tables.php";s:4:"0e13";s:14:"ext_tables.sql";s:4:"5796";s:45:"locallang_csh_txtagpackproviderselections.xml";s:4:"e45c";s:16:"locallang_db.xml";s:4:"7a77";s:7:"tca.php";s:4:"4ded";s:14:"doc/manual.pdf";s:4:"734b";s:14:"doc/manual.sxw";s:4:"f487";s:34:"res/add_tagpackprovider_wizard.gif";s:4:"032f";s:42:"res/icon_tx_tagpackprovider_selections.gif";s:4:"f4d1";}',
+	'suggests' => array(
+	),
 );
 
 ?>
