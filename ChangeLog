@@ -1,6 +1,7 @@
 2010-12-21 Francois Suter (Cobweb)  <typo3@cobweb.ch>
 
 	* Added support for arrays as expression results, resolves #10068
+	* Added warning (in manual and code) about Data Filters not being supported yet, resolves #11231
 
 2009-09-27 Francois Suter (Cobweb)  <typo3@cobweb.ch>
 

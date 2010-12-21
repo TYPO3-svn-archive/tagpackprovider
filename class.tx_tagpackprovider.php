@@ -68,7 +68,7 @@ class tx_tagpackprovider extends tx_tesseract_providerbase {
 	 * @return	boolean		true if it can use the requested type, false otherwise
 	 */
 	public function acceptsDataStructure($type) {
-		return false;
+		return FALSE;
 	}
 
 	/**
@@ -220,6 +220,10 @@ class tx_tagpackprovider extends tx_tesseract_providerbase {
 	 * @return	void
 	 */
 	public function setDataFilter($filter) {
+			// TODO: improve logging when we finally have a central Tesseract debugging workflow
+		if (TYPO3_DLOG) {
+			t3lib_div::devLog('Data filters are currently not supported!', 'tagpackprovider', 2);
+		}
 	}
 
 	/**
