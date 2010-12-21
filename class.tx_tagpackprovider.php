@@ -249,7 +249,9 @@ class tx_tagpackprovider extends tx_tesseract_providerbase {
 				$evaluatedExpression = tx_expressions_parser::evaluateExpression($line);
 				if (!empty($evaluatedExpression)) {
 					$tagList = array();
-					if (strpos($evaluatedExpression, ',') === false) {
+					if (is_array($evaluatedExpression)) {
+						$tagList = $evaluatedExpression;
+					} elseif (strpos($evaluatedExpression, ',') === false) {
 						$tagList = array($evaluatedExpression);
 					} else {
 						$tagList = t3lib_div::trimExplode(',', $evaluatedExpression, 1);

@@ -1,3 +1,7 @@
+2010-12-21 Francois Suter (Cobweb)  <typo3@cobweb.ch>
+
+	* Added support for arrays as expression results, resolves #10068
+
 2009-09-27 Francois Suter (Cobweb)  <typo3@cobweb.ch>
 
 	* First public release
