@@ -72,135 +72,145 @@ class tx_tagpackprovider extends tx_tesseract_providerbase {
 	}
 
 	/**
-	 * This method assembles the data structure and returns it
+	 * Assembles the data structure and returns it
 	 *
-	 * @return	array	standardised data structure
+	 * @return array Standardized data structure
 	 */
 	public function getDataStructure() {
-		$structure = array();
-		$uidsPerTable = array();
-		$tagsPerItem = array();
+			// Get the list of tables
+			// The first one is considered the "main" one
 		$tables = t3lib_div::trimExplode(',', $this->providerData['tables']);
+		$mainTable = $tables[0];
+			// If an empty structure should be returned, initialize one
+		if ($this->hasEmptyOutputStructure) {
+			$structure = $this->initEmptyDataStructure($mainTable, tx_tesseract::IDLIST_STRUCTURE_TYPE);
 
-			// Assemble list of tags
-		$manualTags = array();
-			// Get manually selected tags
-		if (!empty($this->providerData['tags'])) {
-			$manualTags = t3lib_div::trimExplode(',', $this->providerData['tags']);
-		}
-			// Get tags from expressions
-		$expressionTags = array();
-		if (!empty($this->providerData['tag_expressions'])) {
-			$expressionTags = $this->parseExpressionField($this->providerData['tag_expressions']);
-		}
-			// Assemble final tags array
-		$tags = $manualTags;
-		if (count($expressionTags) > 0) {
-				// Expression tags override manual tags
-			if ($this->providerData['tags_override']) {
-				$tags = $expressionTags;
+			// Otherwise, assemble the structure
+		} else {
+			$structure = array();
+			$uidsPerTable = array();
+			$tagsPerItem = array();
 
-				// Expression tags and manual tags are merged
-			} else {
-				$tags = array_merge($manualTags, $expressionTags);
+				// Assemble list of tags
+			$manualTags = array();
+				// Get manually selected tags
+			if (!empty($this->providerData['tags'])) {
+				$manualTags = t3lib_div::trimExplode(',', $this->providerData['tags']);
 			}
-		}
-			// Make sure each tag appears only once
-		$finalTags = array_unique($tags);
+				// Get tags from expressions
+			$expressionTags = array();
+			if (!empty($this->providerData['tag_expressions'])) {
+				$expressionTags = $this->parseExpressionField($this->providerData['tag_expressions']);
+			}
+				// Assemble final tags array
+			$tags = $manualTags;
+			if (count($expressionTags) > 0) {
+					// Expression tags override manual tags
+				if ($this->providerData['tags_override']) {
+					$tags = $expressionTags;
 
-		$where = '';
-			// Assemble where clause based on selected tags, if any
-		if (count($finalTags) > 0) {
-			$where = 'uid_local IN (' . implode(',', $finalTags) . ')';
-		}
+					// Expression tags and manual tags are merged
+				} else {
+					$tags = array_merge($manualTags, $expressionTags);
+				}
+			}
+				// Make sure each tag appears only once
+			$finalTags = array_unique($tags);
 
-			// Continue only if where clause is not empty
-			// (the contrary would mean selecting all records from the selected tables, which makes no sense)
-		if (!empty($where)) {
-				// Add condition on tables
-			if (!empty($this->providerData['tables'])) {
-				$condition = '';
-				foreach ($tables as $aTable) {
-					if (!empty($condition)) {
-						$condition .= ',';
+			$where = '';
+				// Assemble where clause based on selected tags, if any
+			if (count($finalTags) > 0) {
+				$where = 'uid_local IN (' . implode(',', $finalTags) . ')';
+			}
+
+				// Continue only if where clause is not empty
+				// (the contrary would mean selecting all records from the selected tables, which makes no sense)
+			if (!empty($where)) {
+					// Add condition on tables
+				if (!empty($this->providerData['tables'])) {
+					$condition = '';
+					foreach ($tables as $aTable) {
+						if (!empty($condition)) {
+							$condition .= ',';
+						}
+						$condition .= "'" . $aTable . "'";
 					}
-					$condition .= "'" . $aTable . "'";
+					$where .= ' AND tablenames IN (' . $condition . ')';
 				}
-				$where .= ' AND tablenames IN (' . $condition . ')';
-			}
-				// NOTE: not sure how tagpack uses/sets these fields
-				// Anyway there's no TCA for table tx_tagpack_tags_relations_mm,
-				// so the proper API cannot be used
-			$where .= " AND hidden='0' AND deleted='0'";
-				// Query the tags relations table
-				// NOTE: results are sorted by table and by sorting
-				// This respects the order in which tags were applied. Maybe this doesn't make sense after all. Could be reviewed at a later stage
-			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid_local, uid_foreign, tablenames', 'tx_tagpack_tags_relations_mm', $where, '', 'tablenames ASC, sorting ASC');
+					// NOTE: not sure how tagpack uses/sets these fields
+					// Anyway there's no TCA for table tx_tagpack_tags_relations_mm,
+					// so the proper API cannot be used
+				$where .= " AND hidden='0' AND deleted='0'";
+					// Query the tags relations table
+					// NOTE: results are sorted by table and by sorting
+					// This respects the order in which tags were applied. Maybe this doesn't make sense after all. Could be reviewed at a later stage
+				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid_local, uid_foreign, tablenames', 'tx_tagpack_tags_relations_mm', $where, '', 'tablenames ASC, sorting ASC');
 
-				// Loop on the results and sort them by table
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-				if (!isset($uidsPerTable[$row['tablenames']])) {
-					$uidsPerTable[$row['tablenames']] = array();
-					$tagsPerItem[$row['tablenames']] = array();
+					// Loop on the results and sort them by table
+				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+					if (!isset($uidsPerTable[$row['tablenames']])) {
+						$uidsPerTable[$row['tablenames']] = array();
+						$tagsPerItem[$row['tablenames']] = array();
+					}
+					if (!isset($tagsPerItem[$row['tablenames']][$row['uid_foreign']])) {
+						$tagsPerItem[$row['tablenames']][$row['uid_foreign']] = array();
+					}
+					$uidsPerTable[$row['tablenames']][$row['uid_foreign']] = $row['uid_foreign'];
+					$tagsPerItem[$row['tablenames']][$row['uid_foreign']][] = $row['uid_local'];
 				}
-				if (!isset($tagsPerItem[$row['tablenames']][$row['uid_foreign']])) {
-					$tagsPerItem[$row['tablenames']][$row['uid_foreign']] = array();
-				}
-				$uidsPerTable[$row['tablenames']][$row['uid_foreign']] = $row['uid_foreign'];
-				$tagsPerItem[$row['tablenames']][$row['uid_foreign']][] = $row['uid_local'];
-			}
-				// If the items should match all tags ("AND" logical operator chosen)
-				// perform some post-process filtering, because such a condition
-				// cannot be expressed simply in the SELECT query
-			if ($this->providerData['logical_operator'] == 'AND') {
-				foreach ($tagsPerItem as $table => $tableRows) {
-					foreach ($tableRows as $uid_foreign => $uid_locals) {
-							// Check if all chosen tags are matched by tags found per item
-						$rest = array_diff($finalTags, $uid_locals);
-							// At least one tag was not matched,
-							// remove item from list
-						if (count($rest) > 0) {
-							unset($uidsPerTable[$table][$uid_foreign]);
+					// If the items should match all tags ("AND" logical operator chosen)
+					// perform some post-process filtering, because such a condition
+					// cannot be expressed simply in the SELECT query
+				if ($this->providerData['logical_operator'] == 'AND') {
+					foreach ($tagsPerItem as $table => $tableRows) {
+						foreach ($tableRows as $uid_foreign => $uid_locals) {
+								// Check if all chosen tags are matched by tags found per item
+							$rest = array_diff($finalTags, $uid_locals);
+								// At least one tag was not matched,
+								// remove item from list
+							if (count($rest) > 0) {
+								unset($uidsPerTable[$table][$uid_foreign]);
+							}
 						}
 					}
 				}
 			}
-		}
 
-			// Assemble data structure parts
-		$count = 0;
-		$uniqueTable = $tables[0];
-		$uidList = '';
-		$uidListWithTable = '';
-		if (count($uidsPerTable) > 0) {
-				// Set unique table name, if indeed unique
-			if (count($uidsPerTable) == 1) {
-				$uniqueTable = key($uidsPerTable);
-				$Uids = array_unique($uidsPerTable[$uniqueTable]);
-				$uidList = implode(',', $Uids);
-			} else {
-				$uniqueTable = '';
-				$uidList = '';
-			}
-				// Loop on list of uid's per table and assemble lists of id's prepended with table names
-			$prependedUids = array();
+				// Assemble data structure parts
 			$count = 0;
-			foreach ($uidsPerTable as $aTable => $list) {
-				$Uids = array_unique($list);
-				foreach ($Uids as $id) {
-					$prependedUids[] = $aTable . '_' . $id;
-					$count++;
+			$uniqueTable = $mainTable;
+			$uidList = '';
+			$uidListWithTable = '';
+			if (count($uidsPerTable) > 0) {
+					// Set unique table name, if indeed unique
+				if (count($uidsPerTable) == 1) {
+					$uniqueTable = key($uidsPerTable);
+					$Uids = array_unique($uidsPerTable[$uniqueTable]);
+					$uidList = implode(',', $Uids);
+				} else {
+					$uniqueTable = '';
+					$uidList = '';
 				}
+					// Loop on list of uid's per table and assemble lists of id's prepended with table names
+				$prependedUids = array();
+				$count = 0;
+				foreach ($uidsPerTable as $aTable => $list) {
+					$Uids = array_unique($list);
+					foreach ($Uids as $id) {
+						$prependedUids[] = $aTable . '_' . $id;
+						$count++;
+					}
+				}
+				$uidListWithTable = implode(',', $prependedUids);
 			}
-			$uidListWithTable = implode(',', $prependedUids);
-		}
 
-			// Assemble final structure
-		$structure['uniqueTable'] = $uniqueTable;
-		$structure['uidList'] = $uidList;
-		$structure['uidListWithTable'] = $uidListWithTable;
-		$structure['count'] = $count;
-		$structure['totalCount'] = $count;
+				// Assemble final structure
+			$structure['uniqueTable'] = $uniqueTable;
+			$structure['uidList'] = $uidList;
+			$structure['uidListWithTable'] = $uidListWithTable;
+			$structure['count'] = $count;
+			$structure['totalCount'] = $count;
+		}
 		return $structure;
 	}
 
