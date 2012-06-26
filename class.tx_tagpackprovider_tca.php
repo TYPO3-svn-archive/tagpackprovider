@@ -36,16 +36,15 @@ class tx_tagpackprovider_tca {
 	/**
 	 * This method provides a list of tables, based on various settings
 	 *
-	 * @param	array		$$params: properties of the field being modified
-	 * @param	object		$pObj: parent object
-	 * @return	void
+	 * @param array $params Properties of the field being modified
+	 * @param object $pObj Parent object
+	 * @return void
 	 */
-	function getListOfTables(&$params,&$pObj) {
+	function getListOfTables(&$params, &$pObj) {
 			// Get the extension configuration
 		$configuration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['tagpackprovider']);
 			// Get the list of allowed tables from the extension's configuration
 			// If empty, get the list of allowed tables from the configuration of tagpack
-		$tablesList = '';
 		if (empty($configuration['taggedTables'])) {
 			$tagpackConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['tagpack']);
 			$tablesList = $tagpackConfiguration['taggedTables'];

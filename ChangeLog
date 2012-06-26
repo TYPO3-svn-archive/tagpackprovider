@@ -1,3 +1,7 @@
+2012-06-26 Francois Suter (Cobweb)  <typo3@cobweb.ch>
+
+	* Cleaned up some code, verified compatibility with TYPO3 4.7, raised requirements to TYPO3 4.5, resolves #38401
+
 2012-04-19 Francois Suter (Cobweb)  <typo3@cobweb.ch>
 
 	* Released to TER as version 1.1.1
