@@ -12,13 +12,14 @@ if (TYPO3_MODE == 'BE')	{
 
 $TCA['tx_tagpackprovider_selections'] = array (
 	'ctrl' => array (
-		'title'     => 'LLL:EXT:tagpackprovider/locallang_db.xml:tx_tagpackprovider_selections',		
-		'label'     => 'name',	
+		'title'     => 'LLL:EXT:tagpackprovider/locallang_db.xml:tx_tagpackprovider_selections',
+		'label'     => 'name',
 		'tstamp'    => 'tstamp',
 		'crdate'    => 'crdate',
 		'cruser_id' => 'cruser_id',
-		'default_sortby' => 'ORDER BY crdate',	
-		'delete' => 'deleted',	
+		'default_sortby' => 'ORDER BY crdate',
+		'delete' => 'deleted',
+		'searchFields' => 'name,tables,tags,tag_expressions',
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'tca.php',
 		'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY) . 'res/icon_tx_tagpackprovider_selections.gif',
 	),
@@ -33,15 +34,15 @@ $TCA['tt_content']['columns']['tx_displaycontroller_provider2']['config']['allow
 
 	// Add a wizard for adding a tagpackprovider
 $addTagpackProviderWizard = array(
-						'type' => 'script',
-						'title' => 'LLL:EXT:tagpackprovider/locallang_db.xml:wizards.add_tagpackprovider',
-						'script' => 'wizard_add.php',
-						'icon' => 'EXT:tagpackprovider/res/add_tagpackprovider_wizard.gif',
-						'params' => array(
-								'table' => 'tx_tagpackprovider_selections',
-								'pid' => '###CURRENT_PID###',
-								'setValue' => 'append'
-							)
-						);
+	'type' => 'script',
+	'title' => 'LLL:EXT:tagpackprovider/locallang_db.xml:wizards.add_tagpackprovider',
+	'script' => 'wizard_add.php',
+	'icon' => 'EXT:tagpackprovider/res/add_tagpackprovider_wizard.gif',
+	'params' => array(
+			'table' => 'tx_tagpackprovider_selections',
+			'pid' => '###CURRENT_PID###',
+			'setValue' => 'append'
+		)
+	);
 $TCA['tt_content']['columns']['tx_displaycontroller_provider2']['config']['wizards']['add_tagpackprovider'] = $addTagpackProviderWizard;
 ?>
